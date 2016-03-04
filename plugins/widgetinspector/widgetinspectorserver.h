@@ -47,6 +47,7 @@ class PropertyController;
 class OverlayWidget;
 class PaintAnalyzer;
 class RemoteViewServer;
+class ObjectSelectorHelper;
 
 class WidgetInspectorServer : public WidgetInspectorInterface
 {
@@ -92,6 +93,7 @@ class WidgetInspectorServer : public WidgetInspectorInterface
     QLibrary m_externalExportActions;
     PropertyController *m_propertyController;
     QItemSelectionModel *m_widgetSelectionModel;
+    ObjectSelectorHelper *m_selectorHelper;
     QPointer<QWidget> m_selectedWidget;
     PaintAnalyzer *m_paintAnalyzer;
     RemoteViewServer *m_remoteView;

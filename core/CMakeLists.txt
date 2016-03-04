@@ -14,6 +14,7 @@ set(gammaray_srcs
   objectclassinfomodel.cpp
   objectmethodmodel.cpp
   objectenummodel.cpp
+  objectselectorhelper.cpp
   objecttreemodel.cpp
   objecttypefilterproxymodel.cpp
   methodargumentmodel.cpp
@@ -145,6 +146,7 @@ gammaray_install_headers(
   metaobjectrepository.h
   metaproperty.h
   objectmodelbase.h
+  objectselectorhelper.h
   objecttypefilterproxymodel.h
   probeinterface.h
   probecontroller.h

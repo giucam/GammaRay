@@ -40,6 +40,7 @@
 #include "core/metaobjectrepository.h"
 #include "core/varianthandler.h"
 #include "core/probesettings.h"
+#include "core/objectselectorhelper.h"
 #include "core/objecttypefilterproxymodel.h"
 #include "core/probeinterface.h"
 #include "core/probeguard.h"
@@ -107,6 +108,8 @@ WidgetInspectorServer::WidgetInspectorServer(ProbeInterface *probe, QObject *par
   probe->registerModel(QStringLiteral("com.kdab.GammaRay.WidgetTree"), widgetSearchProxy);
 
   m_widgetSelectionModel = ObjectBroker::selectionModel(widgetSearchProxy);
+  m_selectorHelper = new ObjectSelectorHelper(m_widgetSelectionModel, this);
+
   connect(m_widgetSelectionModel,
           SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
           SLOT(widgetSelected(QItemSelection)));
@@ -279,20 +282,7 @@ void WidgetInspectorServer::widgetSelected(QWidget *widget)
   if (m_selectedWidget == widget)
     return;
 
-  const QAbstractItemModel *model = m_widgetSelectionModel->model();
-  const QModelIndexList indexList =
-    model->match(model->index(0, 0),
-                 ObjectModel::ObjectRole,
-                 QVariant::fromValue<QObject*>(widget), 1,
-                 Qt::MatchExactly | Qt::MatchRecursive);
-  if (indexList.isEmpty()) {
-    return;
-  }
-  const QModelIndex index = indexList.first();
-  m_widgetSelectionModel->select(
-    index,
-    QItemSelectionModel::Select | QItemSelectionModel::Clear |
-    QItemSelectionModel::Rows | QItemSelectionModel::Current);
+  m_selectorHelper->select(ObjectModel::ObjectRole, QVariant::fromValue<QObject*>(widget));
 }
 
 void WidgetInspectorServer::objectSelected(QObject* obj)
