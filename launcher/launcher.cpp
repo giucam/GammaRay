@@ -278,7 +278,7 @@ void Launcher::restartTimer()
 
 void Launcher::checkDone()
 {
-    if (d->state == Complete
+    if (d->state == InjectorFinished
         || (d->options.uiMode() == LaunchOptions::InProcessUi && d->state == InjectorFinished)) {
         emit finished();
     } else if ((d->state & InjectorFailed) != 0) {
